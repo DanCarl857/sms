@@ -14,33 +14,36 @@ import java.util.Collection;
  * Created by daniel on 1/26/17.
  */
 @RestController
-@RequestMapping(value = "/ap1/v2/", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/v2/")
 public class ReceiverController {
 
     @Autowired
     ReceiverService receiverService;
 
     @RequestMapping(
-            value = "/users/{userId}/receivers",
-            method = RequestMethod.GET)
-    public ResponseEntity<Collection<Receiver>> getReceivers(@PathVariable(value = "userId")Long id){
+            value = "/receivers",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Collection<Receiver>> getReceivers(){
         Collection<Receiver> receivers = receiverService.findAll();
 
         return new ResponseEntity<Collection<Receiver>>(receivers, HttpStatus.OK);
     }
 
     @RequestMapping(
-            value = "/{userId}/receivers/{recId}",
-            method = RequestMethod.GET)
-    public ResponseEntity<Receiver> getReceiver(@PathVariable(value = "userId")Long uid, @PathVariable(value = "recId")Long id){
+            value = "/receivers/{recId}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Receiver> getReceiver(@PathVariable(value = "recId")Long id){
         Receiver rec = receiverService.findOne(id);
 
         return new ResponseEntity<Receiver>(rec, HttpStatus.OK);
     }
 
     @RequestMapping(
-            value = "/{userId}/receivers",
+            value = "/receivers",
             method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Receiver> createReceiver(@RequestBody Receiver rec){
 
@@ -52,8 +55,9 @@ public class ReceiverController {
     }
 
     @RequestMapping(
-            value = "/{userId}/receivers",
+            value = "/receivers",
             method = RequestMethod.PUT,
+            produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Receiver> updateReceiver(@RequestBody Receiver rec){
 
@@ -68,10 +72,11 @@ public class ReceiverController {
     }
 
     @RequestMapping(
-            value = "/{userId}/receivers/{recId}",
+            value = "/receivers/{recId}",
             method = RequestMethod.DELETE)
     public ResponseEntity deleteReceiver(@PathVariable(value = "recId") Long id){
         receiverService.delete(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
+
 }

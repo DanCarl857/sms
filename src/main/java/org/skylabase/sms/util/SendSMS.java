@@ -22,7 +22,7 @@ public class SendSMS {
             // Build a filter for the MessageList
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("Body", message + " From " + sender));
-            params.add(new BasicNameValuePair("To", receiver)); //Add real number here
+            params.add(new BasicNameValuePair("To", receiver));
             params.add(new BasicNameValuePair("From", Constants.getTwilioNumber()));
             MessageFactory messageFactory = client.getAccount().getMessageFactory();
             com.twilio.sdk.resource.instance.Message msg = messageFactory.create(params);
