@@ -1,4 +1,4 @@
-package org.skylabase.sms.util;
+/**package org.skylabase.sms.util;
 
 import org.springframework.stereotype.Component;
 
@@ -7,9 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
+
  * Created by daniel on 1/26/17.
- */
+
 @Component
 public class CORSFilter implements Filter {
 
@@ -36,3 +36,4 @@ public class CORSFilter implements Filter {
 
     }
 }
+ */

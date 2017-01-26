@@ -1,12 +1,17 @@
 package org.skylabase.sms.domain;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Set;
 
 /**
  * Created by daniel on 1/26/17.
  */
 @Entity
-public class User {
+@Table(name="receivers")
+public class Receiver implements Serializable {
+
+    private static final long serialVersionUID = 2650562120259097985L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,23 +24,17 @@ public class User {
     private String lastName;
 
     @Column
-    private String password;
+    private String countryCode;
 
-    @Column
-    private String email;
+    private Set<Group> groups;
 
-    @Column
-    private String phoneNumber;
+    public Receiver() {}
 
-    public User() {}
-
-    public User(Long id, String firstName, String lastName, String password, String email, String phoneNumber) {
-        this.id = id;
+    public Receiver(String firstName, String lastName, String countryCode, Set<Group> groups) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.password = password;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
+        this.countryCode = countryCode;
+        this.groups = groups;
     }
 
     public Long getId() {
@@ -62,39 +61,32 @@ public class User {
         this.lastName = lastName;
     }
 
-
-    public String getPassword() {
-        return password;
+    public String getCountryCode() {
+        return countryCode;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
     }
 
-    public String getEmail() {
-        return email;
+    @Access(AccessType.PROPERTY)
+    @ManyToMany(mappedBy = "receivers")
+    public Set<Group> getGroups() {
+        return groups;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setGroups(Set<Group> groups) {
+        this.groups = groups;
     }
 
     @Override
     public String toString() {
-        return "User{" +
+        return "Receiver{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
+                ", countryCode='" + countryCode + '\'' +
+                ", groups=" + groups +
                 '}';
     }
 }
