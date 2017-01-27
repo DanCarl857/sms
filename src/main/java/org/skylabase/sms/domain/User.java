@@ -32,7 +32,7 @@ public class User {
     private Set<Message> messages;
 
     @Access(AccessType.PROPERTY)
-    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     public Set<Message> getMessages() {
         return messages;
     }

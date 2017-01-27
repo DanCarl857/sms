@@ -31,8 +31,8 @@ public class Message {
 
     @Access(AccessType.PROPERTY)
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "message_receiver", joinColumns = @JoinColumn(name = "message_id", referencedColumnName = "id"),
-                inverseJoinColumns = @JoinColumn(name="receiver_id", referencedColumnName = "id"))
+    @JoinTable(name = "receivers_messages", joinColumns = @JoinColumn(name = "messages_id", referencedColumnName = "id"),
+                inverseJoinColumns = @JoinColumn(name="receivers_id", referencedColumnName = "id"))
     public Set<Receiver> getReceivers() {
         return receivers;
     }
@@ -84,7 +84,7 @@ public class Message {
 
     @Access(AccessType.PROPERTY)
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "users_id")
     public User getUser() {
         return user;
     }

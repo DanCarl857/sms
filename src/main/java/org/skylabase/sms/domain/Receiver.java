@@ -26,21 +26,25 @@ public class Receiver implements Serializable {
     @Column
     private String countryCode;
 
+    @Column
+    private String phoneNumber;
+
     private Set<Group> groups;
 
     private Set<Message> messages;
 
     public Receiver() {}
 
-    public Receiver(String firstName, String lastName, String countryCode, Set<Group> groups) {
+    public Receiver(String firstName, String lastName, String countryCode, String phoneNumber, Set<Group> groups) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.countryCode = countryCode;
+        this.phoneNumber = phoneNumber;
         this.groups = groups;
     }
 
     @Access(AccessType.PROPERTY)
-    @ManyToMany(mappedBy = "message")
+    @ManyToMany(mappedBy = "receivers")
     public Set<Message> getMessages() {
         return messages;
     }
@@ -55,6 +59,14 @@ public class Receiver implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getFirstName() {
@@ -98,7 +110,10 @@ public class Receiver implements Serializable {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", countryCode='" + countryCode + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
                 ", groups=" + groups +
+                ", messages=" + messages +
                 '}';
     }
+
 }
