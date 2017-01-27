@@ -28,6 +28,8 @@ public class Receiver implements Serializable {
 
     private Set<Group> groups;
 
+    private Set<Message> messages;
+
     public Receiver() {}
 
     public Receiver(String firstName, String lastName, String countryCode, Set<Group> groups) {
@@ -35,6 +37,16 @@ public class Receiver implements Serializable {
         this.lastName = lastName;
         this.countryCode = countryCode;
         this.groups = groups;
+    }
+
+    @Access(AccessType.PROPERTY)
+    @ManyToMany(mappedBy = "message")
+    public Set<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(Set<Message> messages) {
+        this.messages = messages;
     }
 
     public Long getId() {

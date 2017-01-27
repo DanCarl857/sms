@@ -1,11 +1,13 @@
 package org.skylabase.sms.domain;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by daniel on 1/26/17.
  */
 @Entity
+@Table(name="users")
 public class User {
 
     @Id
@@ -26,6 +28,18 @@ public class User {
 
     @Column
     private String phoneNumber;
+
+    private Set<Message> messages;
+
+    @Access(AccessType.PROPERTY)
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    public Set<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(Set<Message> messages) {
+        this.messages = messages;
+    }
 
     public User() {}
 
