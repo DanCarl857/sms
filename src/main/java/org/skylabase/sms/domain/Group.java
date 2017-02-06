@@ -24,7 +24,8 @@ public class Group {
 
     public Group() {}
 
-    public Group(String name, String description, Set<Receiver> receivers) {
+    public Group(Long id, String name, String description, Set<Receiver> receivers) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.receivers = receivers;
@@ -32,10 +33,6 @@ public class Group {
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {

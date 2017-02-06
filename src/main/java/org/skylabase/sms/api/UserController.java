@@ -34,7 +34,6 @@ public class UserController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> getUser(@PathVariable Long id){
-        System.out.println("DEBUG ++++++++++");
         User singleUser = userService.findOne(id);
         return new ResponseEntity<>(singleUser, HttpStatus.OK);
     }
@@ -50,11 +49,14 @@ public class UserController {
     }
 
     @RequestMapping(
-            value = "/users/",
+            value = "/users/{userId}",
             method = RequestMethod.PUT,
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> updateUser(@RequestBody User user){
+    public ResponseEntity<User> updateUser(@RequestBody User user, @PathVariable Long userId){
+        if(userService.findOne(userId) == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         User updatedUser = userService.update(user);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
