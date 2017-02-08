@@ -24,20 +24,41 @@ public class UserController {
             value = "/users",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Collection<User>> getUsers(){
-        Collection<User> users = userService.findAll();
-        return new ResponseEntity<>(users, HttpStatus.OK);
+    public ResponseEntity<Collection<User>> getUsers(
+            @RequestParam(value="username", required = false) String username){
+
+        Collection<User> allUsers = userService.findAll();
+        return new ResponseEntity<>(allUsers, HttpStatus.OK);
     }
+
+    @RequestMapping(
+            value = "/users/find/{username}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<User> getUserByUsername(@PathVariable String username){
+        if(username == null){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        User user = userService.findByUsername(username);
+        if(user == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
 
     @RequestMapping(
             value = "/users/{id}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> getUser(@PathVariable Long id){
-        System.out.println("DEBUG ++++++++++");
         User singleUser = userService.findOne(id);
         return new ResponseEntity<>(singleUser, HttpStatus.OK);
     }
+
+
 
     @RequestMapping(
             value = "/users",
@@ -50,11 +71,14 @@ public class UserController {
     }
 
     @RequestMapping(
-            value = "/users/",
+            value = "/users/{userId}",
             method = RequestMethod.PUT,
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> updateUser(@RequestBody User user){
+    public ResponseEntity<User> updateUser(@RequestBody User user, @PathVariable Long userId){
+        if(userService.findOne(userId) == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         User updatedUser = userService.update(user);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }

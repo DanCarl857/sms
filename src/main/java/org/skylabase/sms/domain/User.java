@@ -29,6 +29,9 @@ public class User {
     @Column
     private String phoneNumber;
 
+    @Column
+    private String username;
+
     private Set<Message> messages;
 
     @Access(AccessType.PROPERTY)
@@ -43,11 +46,25 @@ public class User {
 
     public User() {}
 
-    public User(Long id, String firstName, String lastName, String password, String email, String phoneNumber) {
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", username='" + username + '\'' +
+                ", messages=" + messages +
+                '}';
+    }
+
+    public User(Long id, String firstName, String lastName, String password, String username, String email, String phoneNumber) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
+        this.username = username;
         this.email = email;
         this.phoneNumber = phoneNumber;
     }
@@ -101,14 +118,12 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                '}';
+    public String getUsername() {
+        return username;
     }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
 }

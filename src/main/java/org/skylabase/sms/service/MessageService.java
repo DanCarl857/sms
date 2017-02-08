@@ -13,7 +13,7 @@ public interface MessageService {
 
     Message findOne(Long id);
 
-    Message create(Message message);
+    Message sendSMS(Message message, String fromName);
 
     void delete(Long id);
 }

@@ -21,13 +21,13 @@ USE `bulk-smart` ;
 -- Table `bulk-smart`.`users`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `bulk-smart`.`users` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `first_name` VARCHAR(45) NOT NULL,
   `last_name` VARCHAR(45) NOT NULL,
   `username` VARCHAR(45) NOT NULL,
   `password` VARCHAR(225) NOT NULL,
   `email` VARCHAR(45) NULL,
-  `phone_number` INT(11) NULL,
+  `phone_number` INT(30) NULL,
   PRIMARY KEY (`id`))
   ENGINE = InnoDB;
 
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `bulk-smart`.`users` (
 -- Table `bulk-smart`.`sms-settings`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `bulk-smart`.`sms-settings` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `twilio_api_sid` VARCHAR(45) NOT NULL,
   `twilio_api_key` VARCHAR(45) NOT NULL,
   `users_id` INT NOT NULL,
@@ -57,11 +57,11 @@ CREATE TABLE IF NOT EXISTS `bulk-smart`.`sms-settings` (
 -- Table `bulk-smart`.`receivers`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `bulk-smart`.`receivers` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `first_name` VARCHAR(45) NULL,
   `last_name` VARCHAR(45) NULL,
-  `phone_number` VARCHAR(45) NULL,
-  `country_code` VARCHAR(45) NULL,
+  `phone_number` VARCHAR(30) NULL,
+  `country_code` VARCHAR(10) NULL,
   PRIMARY KEY (`id`, `first_name`))
   ENGINE = InnoDB;
 
@@ -70,9 +70,9 @@ CREATE TABLE IF NOT EXISTS `bulk-smart`.`receivers` (
 -- Table `bulk-smart`.`groups`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `bulk-smart`.`groups` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
-  `description` VARCHAR(45) NULL,
+  `description` VARCHAR(255) NULL,
   PRIMARY KEY (`id`))
   ENGINE = InnoDB;
 
@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `bulk-smart`.`groups` (
 -- Table `bulk-smart`.`messages`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `bulk-smart`.`messages` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `message` VARCHAR(140) NOT NULL,
   `send_time` DATETIME NOT NULL,
   `users_id` INT NOT NULL,

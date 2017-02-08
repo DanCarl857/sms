@@ -1,7 +1,6 @@
 package org.skylabase.sms.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -13,15 +12,12 @@ import java.io.IOException;
 /**
  * Created by daniel on 1/27/17.
  */
-
+@Service
 public class CORSFilter extends OncePerRequestFilter {
-
-    private final Logger LOG = LoggerFactory.getLogger(CORSFilter.class);
 
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
             throws ServletException, IOException {
-        LOG.info("Adding CORS Headers ........................");
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         res.setHeader("Access-Control-Max-Age", "3600");

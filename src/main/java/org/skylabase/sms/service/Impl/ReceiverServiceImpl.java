@@ -47,6 +47,22 @@ public class ReceiverServiceImpl implements ReceiverService {
     }
 
     @Override
+    public Boolean receiverExists(Receiver rec) {
+        Receiver receiver = receiverRepository.findByFirstName(rec.getFirstName());
+        if(receiver != null){
+            Receiver rec1 = receiverRepository.findByLastName(rec.getFirstName());
+            if(rec1 != null) {
+                return true;
+            }
+        }
+        Receiver rec1 = receiverRepository.findByPhoneNumber(rec.getPhoneNumber());
+        if (rec1 != null){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public Receiver update(Receiver rec){
         Receiver persistentRec = this.findOne(rec.getId());
 

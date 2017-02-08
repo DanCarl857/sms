@@ -19,9 +19,6 @@ public class Message {
     private String message;
 
     @Column
-    private String sender;
-
-    @Column
     private Date sendTime;
 
     @Column
@@ -43,9 +40,8 @@ public class Message {
 
     public Message() {}
 
-    public Message(String message, String sender, Date sendTime, User user) {
+    public Message(String message, Date sendTime, User user) {
         this.message = message;
-        this.sender = sender;
         this.sendTime = sendTime;
         this.user = user;
     }
@@ -64,14 +60,6 @@ public class Message {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    public String getSender() {
-        return sender;
-    }
-
-    public void setSender(String sender) {
-        this.sender = sender;
     }
 
     public Date getSendTime() {
@@ -98,7 +86,6 @@ public class Message {
         return "Message{" +
                 "id=" + id +
                 ", message='" + message + '\'' +
-                ", sender='" + sender + '\'' +
                 ", sendTime=" + sendTime +
                 ", user=" + user +
                 '}';
