@@ -17,5 +17,7 @@ public interface ReceiverService {
 
     Receiver update(Receiver receiver);
 
+    Boolean receiverExists(Receiver receiver);
+
     void delete(Long id);
 }

@@ -33,7 +33,7 @@ public class MessageController {
             value = "/messages/{id}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Message> getUser(@PathVariable Long id){
+    public ResponseEntity<Message> getMessage(@PathVariable Long id){
         Message singleGroup = messageService.findOne(id);
         return new ResponseEntity<>(singleGroup, HttpStatus.OK);
     }
@@ -43,9 +43,14 @@ public class MessageController {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Message> createUser(@RequestBody Message group) {
-        Message createGroup = messageService.create(group);
-        return new ResponseEntity<>(createGroup, HttpStatus.CREATED);
+    public ResponseEntity<Message> sendMessage(@RequestBody Message message, @PathVariable String fromName) {
+        Message message1;
+        if(fromName == null){
+            message1 = messageService.sendSMS(message, "Admin");
+        } else {
+            message1 = messageService.sendSMS(message, fromName);
+        }
+        return new ResponseEntity<>(message1, HttpStatus.CREATED);
     }
 
     @RequestMapping(

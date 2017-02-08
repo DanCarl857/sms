@@ -1,8 +1,10 @@
 package org.skylabase.sms.service.Impl;
 
 import org.skylabase.sms.domain.Message;
+import org.skylabase.sms.domain.Receiver;
 import org.skylabase.sms.repository.MessageRepository;
 import org.skylabase.sms.service.MessageService;
+import org.skylabase.sms.util.SendSMS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,9 +32,21 @@ public class MessageServiceImpl implements MessageService{
     }
 
     @Override
-    public Message create(Message message){
+    public Message sendSMS(Message message, String fromName){
+        /* send message to receivers */
         if(message.getId() != null){
             return null;
+        }
+        if (fromName == null){
+            for(Receiver receivers: message.getReceivers()){
+                String realPhoneNumber = receivers.getCountryCode() + receivers.getPhoneNumber();
+                SendSMS.sendSMS("admin", message.getMessage(), realPhoneNumber);
+            }
+        } else {
+            for(Receiver receivers: message.getReceivers()){
+                String realPhoneNumber = receivers.getCountryCode() + receivers.getPhoneNumber();
+                SendSMS.sendSMS("admin", message.getMessage(), realPhoneNumber, fromName);
+            }
         }
         Message createdMessage = messageRepository.save(message);
         return createdMessage;

@@ -27,7 +27,7 @@ public class ReceiverController {
     public ResponseEntity<Collection<Receiver>> getReceivers(){
         Collection<Receiver> receivers = receiverService.findAll();
 
-        return new ResponseEntity<Collection<Receiver>>(receivers, HttpStatus.OK);
+        return new ResponseEntity<>(receivers, HttpStatus.OK);
     }
 
     @RequestMapping(
@@ -37,7 +37,7 @@ public class ReceiverController {
     public ResponseEntity<Receiver> getReceiver(@PathVariable(value = "recId")Long id){
         Receiver rec = receiverService.findOne(id);
 
-        return new ResponseEntity<Receiver>(rec, HttpStatus.OK);
+        return new ResponseEntity<>(rec, HttpStatus.OK);
     }
 
     @RequestMapping(
@@ -46,12 +46,14 @@ public class ReceiverController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Receiver> createReceiver(@RequestBody Receiver rec){
-
+        if(receiverService.receiverExists(rec)){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
         if(rec == null){
-            return new ResponseEntity<Receiver>(rec, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(rec, HttpStatus.BAD_REQUEST);
         }
         Receiver createRec = receiverService.create(rec);
-        return new ResponseEntity<Receiver>(createRec, HttpStatus.CREATED);
+        return new ResponseEntity<>(createRec, HttpStatus.CREATED);
     }
 
     @RequestMapping(
@@ -62,13 +64,13 @@ public class ReceiverController {
     public ResponseEntity<Receiver> updateReceiver(@RequestBody Receiver rec){
 
         if(rec == null){
-            return new ResponseEntity<Receiver>(rec, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(rec, HttpStatus.BAD_REQUEST);
         }
         Receiver updateReceiver = receiverService.update(rec);
         if(updateReceiver == null) {
-            return new ResponseEntity<Receiver>(updateReceiver, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(updateReceiver, HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Receiver>(updateReceiver, HttpStatus.OK);
+        return new ResponseEntity<>(updateReceiver, HttpStatus.OK);
     }
 
     @RequestMapping(
