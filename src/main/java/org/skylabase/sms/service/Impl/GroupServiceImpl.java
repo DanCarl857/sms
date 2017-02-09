@@ -33,9 +33,7 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public Group create(Group group) {
 
-        Group persistentGroup = this.findOne(group.getId());
-
-        if(persistentGroup != null){
+        if(group.getId() != null){
             return null;
         }
         Group createdGroup = groupRepository.save(group);
