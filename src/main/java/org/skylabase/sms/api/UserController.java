@@ -55,6 +55,9 @@ public class UserController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> getUser(@PathVariable Long id){
         User singleUser = userService.findOne(id);
+        if(singleUser == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(singleUser, HttpStatus.OK);
     }
 

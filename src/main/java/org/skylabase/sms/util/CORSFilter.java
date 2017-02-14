@@ -1,6 +1,6 @@
 package org.skylabase.sms.util;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -12,7 +12,7 @@ import java.io.IOException;
 /**
  * Created by daniel on 1/27/17.
  */
-@Service
+@Component
 public class CORSFilter extends OncePerRequestFilter {
 
     @Override

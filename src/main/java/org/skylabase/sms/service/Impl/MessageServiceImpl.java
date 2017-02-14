@@ -28,27 +28,33 @@ public class MessageServiceImpl implements MessageService{
     @Override
     public Message findOne(Long id){
         Message message = messageRepository.findOne(id);
+
+        if(message == null){
+            return null;
+        }
         return message;
     }
 
     @Override
     public Message sendSMS(Message message, String fromName){
         /* send message to receivers */
+        Message createdMessage;
         if(message.getId() != null){
             return null;
         }
         if (fromName == null){
             for(Receiver receivers: message.getReceivers()){
                 String realPhoneNumber = receivers.getCountryCode() + receivers.getPhoneNumber();
-                SendSMS.sendSMS("admin", message.getMessage(), realPhoneNumber);
+                SendSMS.sendSMS(message.getUser().getUsername(), message.getMessage(), realPhoneNumber);
             }
+            createdMessage = messageRepository.save(message);
         } else {
             for(Receiver receivers: message.getReceivers()){
                 String realPhoneNumber = receivers.getCountryCode() + receivers.getPhoneNumber();
-                SendSMS.sendSMS("admin", message.getMessage(), realPhoneNumber, fromName);
+                SendSMS.sendSMS(message.getUser().getUsername(), message.getMessage(), realPhoneNumber, fromName);
             }
+            createdMessage = messageRepository.save(message);
         }
-        Message createdMessage = messageRepository.save(message);
         return createdMessage;
     }
 

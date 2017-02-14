@@ -37,6 +37,10 @@ public class ReceiverController {
     public ResponseEntity<Receiver> getReceiver(@PathVariable(value = "recId")Long id){
         Receiver rec = receiverService.findOne(id);
 
+        if(rec == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
         return new ResponseEntity<>(rec, HttpStatus.OK);
     }
 

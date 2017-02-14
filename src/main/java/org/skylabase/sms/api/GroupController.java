@@ -35,6 +35,9 @@ public class GroupController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Group> getUser(@PathVariable Long id){
         Group singleGroup = groupService.findOne(id);
+        if(singleGroup == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(singleGroup, HttpStatus.OK);
     }
 

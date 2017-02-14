@@ -32,6 +32,9 @@ public class ReceiverServiceImpl implements ReceiverService {
     public Receiver findOne(Long id){
         logger.info("Getting receiver with id = " + id);
         Receiver rec = receiverRepository.findOne(id);
+        if (rec == null){
+            return null;
+        }
         return rec;
     }
 

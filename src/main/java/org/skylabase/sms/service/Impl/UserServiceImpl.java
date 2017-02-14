@@ -38,6 +38,10 @@ public class UserServiceImpl implements UserService {
     public User findOne(Long id) {
         logger.info("Getting user with id = " + id);
         User user = userRepository.findOne(id);
+
+        if(user == null){
+            return null;
+        }
         return user;
     }
 

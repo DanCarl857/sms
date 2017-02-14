@@ -27,6 +27,10 @@ public class GroupServiceImpl implements GroupService {
     public Group findOne(Long id) {
 
         Group group = groupRepository.findOne(id);
+
+        if(group == null){
+            return null;
+        }
         return group;
     }
 

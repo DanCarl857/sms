@@ -24,7 +24,7 @@ public class MessageController {
             value = "/messages",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Collection<Message>> getGroups(){
+    public ResponseEntity<Collection<Message>> getMessages(){
         Collection<Message> messages = messageService.findAll();
         return new ResponseEntity<>(messages, HttpStatus.OK);
     }
@@ -34,8 +34,11 @@ public class MessageController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Message> getMessage(@PathVariable Long id){
-        Message singleGroup = messageService.findOne(id);
-        return new ResponseEntity<>(singleGroup, HttpStatus.OK);
+        Message singleMessage = messageService.findOne(id);
+        if(singleMessage == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(singleMessage, HttpStatus.OK);
     }
 
     @RequestMapping(
@@ -43,10 +46,10 @@ public class MessageController {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Message> sendMessage(@RequestBody Message message, @PathVariable String fromName) {
+    public ResponseEntity<Message> createMessage(@RequestBody Message message, @RequestParam(value = "fromName", required = false) String fromName) {
         Message message1;
         if(fromName == null){
-            message1 = messageService.sendSMS(message, "Admin");
+            message1 = messageService.sendSMS(message, message.getUser().getUsername());
         } else {
             message1 = messageService.sendSMS(message, fromName);
         }

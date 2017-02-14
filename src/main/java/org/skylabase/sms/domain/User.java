@@ -1,5 +1,7 @@
 package org.skylabase.sms.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -8,7 +10,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name="users")
-public class User {
+public class User implements java.io.Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,6 +38,7 @@ public class User {
 
     @Access(AccessType.PROPERTY)
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
     public Set<Message> getMessages() {
         return messages;
     }

@@ -1,5 +1,7 @@
 package org.skylabase.sms.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
@@ -45,6 +47,7 @@ public class Receiver implements Serializable {
 
     @Access(AccessType.PROPERTY)
     @ManyToMany(mappedBy = "receivers")
+    @JsonManagedReference
     public Set<Message> getMessages() {
         return messages;
     }

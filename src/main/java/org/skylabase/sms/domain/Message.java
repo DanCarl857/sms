@@ -1,5 +1,7 @@
 package org.skylabase.sms.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
@@ -27,9 +29,10 @@ public class Message {
     private Set<Receiver> receivers;
 
     @Access(AccessType.PROPERTY)
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "receivers_messages", joinColumns = @JoinColumn(name = "messages_id", referencedColumnName = "id"),
                 inverseJoinColumns = @JoinColumn(name="receivers_id", referencedColumnName = "id"))
+    @JsonBackReference
     public Set<Receiver> getReceivers() {
         return receivers;
     }
@@ -73,6 +76,7 @@ public class Message {
     @Access(AccessType.PROPERTY)
     @ManyToOne
     @JoinColumn(name = "users_id")
+    @JsonBackReference
     public User getUser() {
         return user;
     }
